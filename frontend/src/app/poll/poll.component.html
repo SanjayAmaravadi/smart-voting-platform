@@ -1,0 +1,508 @@
+<div class="app-container">
+
+    <div class="main-wrapper">
+
+        <!-- HEADER -->
+        <div class="header-section">
+
+            <h1>
+                <i class="bi bi-bar-chart-fill"></i>
+                Smart Voting Platform
+            </h1>
+
+            <p>
+                Create polls, collect votes and analyze results
+            </p>
+
+        </div>
+
+        <!-- CREATE POLL -->
+        <div class="glass-card create-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Create Poll</h2>
+
+                    <p>
+                        Create interactive voting polls
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- QUESTION -->
+            <div class="mb-3">
+
+                <input [(ngModel)]="newPoll.question" type="text" class="form-control custom-input"
+                    placeholder="Enter poll question..." />
+
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="category-section">
+
+                <label class="category-label">
+                    Select Category
+                </label>
+
+                <div class="category-container">
+
+                    <button *ngFor="let category of categories" type="button" class="category-chip" [ngClass]="{
+                            'active-category':
+                            newPoll.category === category
+                        }" (click)="newPoll.category = category">
+
+                        {{ category }}
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- OPTIONS -->
+            <div cdkDropList (cdkDropListDropped)="dropOption($event)" class="options-wrapper">
+
+                <div *ngFor="
+                        let option of newPoll.options;
+                        let i = index;
+                        trackBy: trackByIndex
+                    " cdkDrag class="option-row">
+
+                    <!-- DRAG -->
+                    <div class="drag-icon" cdkDragHandle>
+
+                        <i class="bi bi-grip-vertical"></i>
+
+                    </div>
+
+                    <!-- NUMBER -->
+                    <div class="option-number">
+
+                        {{ i + 1 }}
+
+                    </div>
+
+                    <!-- INPUT -->
+                    <input [(ngModel)]="newPoll.options[i]" class="form-control custom-input"
+                        placeholder="Enter option" />
+
+                    <!-- DELETE -->
+                    <button *ngIf="newPoll.options.length > 2" class="delete-btn" (click)="removeOption(i)">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="button-group-horizontal">
+
+                <button class="add-btn" (click)="addOption()">
+
+                    <i class="bi bi-plus-lg"></i>
+
+                    Add Option
+
+                </button>
+
+                <button class="create-btn" (click)="createPoll()">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Create Poll
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- POLLS HEADER -->
+        <div class="poll-top">
+
+            <div>
+
+                <h2>Available Polls</h2>
+
+                <p>
+                    Browse and vote on polls
+                </p>
+
+            </div>
+
+            <div class="poll-count">
+
+                {{ polls.length }} Polls
+
+            </div>
+
+        </div>
+
+        <!-- SEARCH -->
+        <div class="glass-card search-card">
+
+            <div class="search-grid">
+
+                <input [(ngModel)]="search" (keyup)="loadPolls()" type="text" class="form-control custom-input"
+                placeholder="Search polls..." />
+                
+                
+                <div class="filter-wrapper">
+                    <select [(ngModel)]="selectedCategory" (change)="loadPolls()" class="filter-select">
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        <option *ngFor="let category of categories" [value]="category">
+
+                            {{ category }}
+
+                        </option>
+
+                    </select>
+
+                    <i class="bi bi-chevron-down filter-icon"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- LOADING -->
+        <div *ngIf="loading" class="poll-grid">
+
+            <div *ngFor="
+                    let item of [1,2,3,4,5,6]
+                " class="skeleton-card">
+
+            </div>
+
+        </div>
+
+        <!-- EMPTY -->
+        <div *ngIf="
+                !loading &&
+                polls.length === 0
+            " class="empty-state">
+
+            <i class="bi bi-inbox"></i>
+
+            <h3>No Polls Found</h3>
+
+            <p>
+                Create your first poll
+            </p>
+
+        </div>
+
+        <!-- POLL GRID -->
+        <div *ngIf="!loading" class="poll-grid">
+
+            <div *ngFor="
+                    let poll of polls
+                " class="glass-card poll-card">
+
+                <!-- HEADER -->
+                <div class="poll-card-header">
+
+                    <div>
+
+                        <div class="category-badge">
+
+                            {{ poll.category }}
+
+                        </div>
+
+                        <h3>
+
+                            {{ poll.question }}
+
+                        </h3>
+
+                    </div>
+
+                    <div class="vote-badge">
+
+                        {{ getTotalVotes(poll) }}
+                        Votes
+
+                    </div>
+
+                </div>
+
+                <!-- TIMESTAMP -->
+                <div class="timestamp">
+
+                    <i class="bi bi-clock"></i>
+
+                    {{ poll.createdAt | date:'medium' }}
+
+                </div>
+
+                <!-- OPTIONS -->
+                <div *ngFor="
+                        let option of poll.options;
+                        let i = index
+                    " class="option-card">
+
+                    <div class="interactive-option-card" [ngClass]="{
+                            'selected-highlight':
+                            poll.selectedOptionIndex === i
+                        }" (click)="
+                            toggleSelectOption(
+                                poll,
+                                i
+                            )
+                        " (dblclick)="
+                            deselectOption(
+                                poll,
+                                i
+                            )
+                        ">
+
+                        <div class="option-top">
+
+                            <div class="option-title">
+
+                                {{ option.optionText }}
+
+                            </div>
+
+                            <div class="option-votes">
+
+                                {{ option.voteCount }}
+                                votes
+
+                            </div>
+
+                        </div>
+
+                        <!-- PROGRESS -->
+                        <div class="progress custom-progress">
+
+                            <div class="progress-bar custom-progress-bar" [ngClass]="{
+                                    'progress-purple':
+                                    i % 4 === 0,
+
+                                    'progress-blue':
+                                    i % 4 === 1,
+
+                                    'progress-green':
+                                    i % 4 === 2,
+
+                                    'progress-orange':
+                                    i % 4 === 3
+                                }" [style.width.%]="
+                                    getPercentage(
+                                        option.voteCount,
+                                        poll
+                                    )
+                                ">
+
+                                {{
+                                getPercentage(
+                                option.voteCount,
+                                poll
+                                )
+                                | number:'1.0-0'
+                                }}%
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button class="vote-btn" (click)="
+                        vote(
+                            poll.id!,
+                            poll.selectedOptionIndex!
+                        )
+                    " [disabled]="
+                        poll.selectedOptionIndex ===
+                        undefined ||
+
+                        poll.selectedOptionIndex ===
+                        null
+                    ">
+
+                    Vote
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <div *ngIf="
+                !loading &&
+                polls.length > 0
+            " class="pagination-wrapper">
+
+            <button class="pagination-btn" (click)="prevPage()">
+
+                Previous
+
+            </button>
+
+            <div class="page-indicator">
+
+                Page {{ currentPage + 1 }}
+                of {{ totalPages }}
+
+            </div>
+
+            <button class="pagination-btn" (click)="nextPage()">
+
+                Next
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- <div class="app-container">
+    <div class="main-wrapper">
+
+        <div class="header-section">
+            <h1>
+                <span class="header-icon">🗳️</span>
+                Smart Voting Platform
+            </h1>
+            <p>Create interactive polls and collect votes instantly</p>
+        </div>
+
+        <div class="glass-card create-card">
+            <div class="create-header">
+                <h2>Create Poll</h2>
+                <p>Create custom voting polls</p>
+            </div>
+
+            <div class="question-wrapper">
+                <input
+                    [(ngModel)]="newPoll.question"
+                    class="form-control custom-input"
+                    placeholder="Enter your poll question..."
+                />
+            </div>
+
+            <div class="options-wrapper" cdkDropList (cdkDropListDropped)="dropOption($event)">
+                <div 
+                    *ngFor="let option of newPoll.options; let i = index; trackBy: trackByIndex" 
+                    class="option-row"
+                    cdkDrag>
+                    
+                    <div class="drag-icon" cdkDragHandle>
+                        <i class="bi bi-grip-vertical"></i>
+                    </div>
+
+                    <div class="option-number">{{ i + 1 }}</div>
+
+                    <div class="option-input">
+                        <input
+                            [(ngModel)]="option.optionText"
+                            class="form-control custom-input"
+                            placeholder="Enter option"
+                        />
+                    </div>
+
+                    <button *ngIf="newPoll.options.length > 2" class="delete-btn" (click)="removeOption(i)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="add-btn" (click)="addOption()">
+                    <i class="bi bi-plus-lg"></i> Add Option
+                </button>
+                <button class="create-btn" (click)="createPoll()">
+                    <i class="bi bi-check-lg"></i> Create Poll
+                </button>
+            </div>
+        </div>
+
+        <div class="polls-section">
+            <div class="poll-top">
+                <div>
+                    <h2>Available Polls</h2>
+                    <p>Live poll results and analytics</p>
+                </div>
+                <div class="poll-count">
+                    {{ polls.length }} Polls
+                </div>
+            </div>
+
+            <div *ngIf="!loading && polls.length === 0" class="empty-state">
+                No polls available
+            </div>
+
+            <div class="poll-grid">
+                <div *ngFor="let poll of polls" class="glass-card poll-card">
+                    
+                    <div class="poll-card-header">
+                        <h3>{{ poll.question }}</h3>
+                        <div class="vote-badge">
+                            {{ getTotalVotes(poll) }} Votes
+                        </div>
+                    </div>
+
+                    <div *ngFor="let option of poll.options; let i = index" class="poll-option-row">
+                        <div 
+                            class="interactive-option-card"
+                            [ngClass]="{'selected-highlight': poll.selectedOptionIndex === i}"
+                            (click)="toggleSelectOption(poll, i)">
+                            
+                            <div class="option-content-block">
+                                <div class="option-top">
+                                    <span class="option-title">{{ option.optionText }}</span>
+                                    <span class="option-votes">
+                                        {{ option.voteCount }} {{ option.voteCount === 1 ? 'vote' : 'votes' }} 
+                                        ({{ getPercentage(option.voteCount, poll) | number:'1.0-0' }}%)
+                                    </span>
+                                </div>
+
+                                <div class="progress custom-progress">
+                                    <div
+                                        class="progress-bar custom-progress-bar"
+                                        [ngClass]="{
+                                            'progress-purple': i % 4 === 0,
+                                            'progress-blue': i % 4 === 1,
+                                            'progress-green': i % 4 === 2,
+                                            'progress-orange': i % 4 === 3
+                                        }"
+                                        [style.width.%]="getPercentage(option.voteCount, poll)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button 
+                        class="vote-btn" 
+                        (click)="vote(poll.id!, poll.selectedOptionIndex)"
+                        [disabled]="poll.selectedOptionIndex === undefined || poll.selectedOptionIndex === null">
+                        Vote
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div> -->

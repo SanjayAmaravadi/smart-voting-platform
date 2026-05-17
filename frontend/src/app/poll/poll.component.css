@@ -1,0 +1,993 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    overflow-x:hidden;
+    font-family:'Inter','Segoe UI',system-ui,sans-serif;
+    background:#030712;
+    color:#f8fafc;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app-container{
+    min-height:100vh;
+
+    background:
+        radial-gradient(circle at top,#0f172a 0%,#020617 60%);
+
+    padding:36px 22px;
+
+    color:#f8fafc;
+}
+
+.main-wrapper{
+    max-width:1280px;
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header-section{
+    text-align:center;
+    margin-bottom:34px;
+}
+
+.header-section h1{
+    font-size:40px;
+    font-weight:800;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+
+    margin-bottom:10px;
+
+    color:#ffffff;
+}
+
+.header-icon{
+    color:#3b82f6;
+}
+
+.header-section p{
+    color:#94a3b8;
+    font-size:15px;
+}
+
+/* =========================
+   GLASS CARD
+========================= */
+
+.glass-card{
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,18,36,0.78),
+            rgba(3,7,18,0.95)
+        );
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    border-radius:22px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   CREATE CARD
+========================= */
+
+.create-card{
+    padding:28px;
+    margin-bottom:34px;
+}
+
+.create-header h2{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:4px;
+
+    color:#ffffff;
+}
+
+.create-header p{
+    color:#94a3b8;
+    font-size:14px;
+    margin-bottom:24px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.custom-input{
+    width:100%;
+    height:54px;
+
+    background:rgba(255,255,255,0.03)!important;
+
+    border:1px solid rgba(255,255,255,0.06)!important;
+
+    border-radius:14px!important;
+
+    color:#ffffff!important;
+
+    padding:0 16px!important;
+
+    font-size:15px;
+
+    transition:0.2s ease;
+}
+
+.custom-input::placeholder{
+    color:#64748b!important;
+    opacity:1;
+}
+
+.custom-input:focus{
+
+    background:rgba(255,255,255,0.05)!important;
+
+    border-color:rgba(59,130,246,0.45)!important;
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,0.12)!important;
+}
+
+.question-wrapper{
+    margin-bottom:22px;
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+.category-section{
+    margin-bottom:26px;
+}
+
+.category-label{
+    display:block;
+    margin-bottom:12px;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:#cbd5e1;
+}
+
+.category-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.category-chip{
+
+    border:none;
+    outline:none;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,0.05);
+
+    color:#94a3b8;
+
+    font-size:14px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:all 0.2s ease;
+}
+
+.category-chip:hover{
+    background:rgba(59,130,246,0.12);
+    color:#60a5fa;
+}
+
+.active-category{
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    color:white;
+
+    box-shadow:
+        0 8px 18px rgba(59,130,246,0.28);
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options-wrapper{
+    margin-bottom:10px;
+}
+
+.option-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.drag-icon{
+    width:36px;
+    height:36px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.04);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:#64748b;
+
+    cursor:grab;
+
+    flex-shrink:0;
+}
+
+.drag-icon:active{
+    cursor:grabbing;
+}
+
+.option-number{
+    width:42px;
+    height:42px;
+
+    border-radius:12px;
+
+    background:rgba(30,41,59,0.75);
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+    font-weight:700;
+
+    flex-shrink:0;
+}
+
+.option-row input{
+    flex:1;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.delete-btn{
+    width:42px;
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #f43f5e
+        );
+
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+
+    flex-shrink:0;
+}
+
+.delete-btn:hover{
+    transform:scale(1.05);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button-group-horizontal{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:26px;
+    flex-wrap:wrap;
+}
+
+.add-btn,
+.create-btn{
+
+    height:48px;
+
+    padding:0 24px;
+
+    border:none;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:10px;
+
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+.add-btn{
+
+    background:rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.add-btn:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.create-btn{
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
+
+    box-shadow:
+        0 10px 22px rgba(34,197,94,0.2);
+}
+
+.create-btn:hover{
+    transform:translateY(-1px);
+}
+
+/* =========================
+   POLL TOP
+========================= */
+
+.poll-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:22px;
+}
+
+.poll-top h2{
+    font-size:30px;
+    font-weight:700;
+
+    color:#ffffff;
+}
+
+.poll-top p{
+    color:#94a3b8;
+    margin-top:4px;
+}
+
+.poll-count{
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9333ea,
+            #a855f7
+        );
+
+    font-weight:700;
+
+    font-size:14px;
+
+    color:white;
+}
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
+.search-card{
+    padding:20px;
+    margin-bottom:26px;
+}
+
+.search-grid{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.search-grid input{
+    flex:1;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filter-wrapper{
+    position:relative;
+    width:260px;
+    flex-shrink:0;
+}
+
+.filter-select{
+
+    width:100%;
+    height:52px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    color:#ffffff;
+
+    padding:0 44px 0 18px;
+
+    font-size:14px;
+    font-weight:500;
+
+    appearance:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+.filter-select:hover{
+    border-color:rgba(59,130,246,0.35);
+}
+
+.filter-select:focus{
+
+    border-color:rgba(59,130,246,0.45);
+
+    box-shadow:
+        0 0 0 3px rgba(59,130,246,0.12);
+}
+
+.filter-select option{
+    background:#0f172a;
+    color:#ffffff;
+}
+
+.filter-icon{
+
+    position:absolute;
+
+    right:16px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#64748b;
+
+    pointer-events:none;
+}
+
+/* =========================
+   POLL GRID
+========================= */
+
+.poll-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(380px,1fr));
+
+    gap:20px;
+}
+
+/* =========================
+   POLL CARD
+========================= */
+
+.poll-card{
+    padding:22px;
+}
+
+.poll-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:16px;
+}
+
+.poll-card-header h3{
+    font-size:19px;
+    font-weight:700;
+    line-height:1.4;
+
+    color:#ffffff!important;
+}
+
+/* =========================
+   CATEGORY BADGE
+========================= */
+
+.category-badge{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    margin-bottom:10px;
+
+    background:rgba(168,85,247,0.15);
+
+    border:1px solid rgba(168,85,247,0.25);
+
+    color:#c084fc;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+/* =========================
+   VOTE BADGE
+========================= */
+
+.vote-badge{
+
+    background:rgba(59,130,246,0.12);
+
+    border:1px solid rgba(59,130,246,0.2);
+
+    color:#60a5fa;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+    font-weight:700;
+
+    white-space:nowrap;
+}
+
+/* =========================
+   TIMESTAMP
+========================= */
+
+.timestamp{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    margin-bottom:18px;
+}
+
+/* =========================
+   OPTION CARD
+========================= */
+
+.poll-option-row{
+    margin-bottom:12px;
+}
+
+.interactive-option-card{
+
+    background:rgba(255,255,255,0.02);
+
+    border:1px solid rgba(255,255,255,0.04);
+
+    border-radius:14px;
+
+    padding:14px;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+.interactive-option-card:hover{
+    background:rgba(255,255,255,0.04);
+}
+
+.selected-highlight{
+
+    border-color:rgba(59,130,246,0.35);
+
+    background:rgba(59,130,246,0.08);
+
+    box-shadow:
+        0 0 18px rgba(59,130,246,0.08);
+}
+
+.option-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:10px;
+}
+
+.option-title{
+    font-size:14px;
+    font-weight:600;
+
+    color:#ffffff;
+}
+
+.option-votes{
+    font-size:13px;
+    color:#94a3b8;
+    white-space:nowrap;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.custom-progress{
+
+    height:8px!important;
+
+    background:rgba(255,255,255,0.04)!important;
+
+    border-radius:999px!important;
+
+    overflow:hidden;
+}
+
+.custom-progress-bar{
+    border-radius:999px;
+}
+
+/* =========================
+   PROGRESS COLORS
+========================= */
+
+.progress-purple{
+    background:
+        linear-gradient(
+            90deg,
+            #a855f7,
+            #6366f1
+        );
+}
+
+.progress-blue{
+    background:
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #3b82f6
+        );
+}
+
+.progress-green{
+    background:
+        linear-gradient(
+            90deg,
+            #22c55e,
+            #10b981
+        );
+}
+
+.progress-orange{
+    background:
+        linear-gradient(
+            90deg,
+            #f97316,
+            #f59e0b
+        );
+}
+
+/* =========================
+   VOTE BUTTON
+========================= */
+
+.vote-btn{
+
+    width:100%;
+
+    height:46px;
+
+    margin-top:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.05);
+
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+}
+
+.vote-btn:hover:not(:disabled){
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+}
+
+.vote-btn:disabled{
+    opacity:0.35;
+    cursor:not-allowed;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state{
+    text-align:center;
+    padding:60px 20px;
+
+    color:#64748b;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination-wrapper{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:18px;
+
+    margin-top:38px;
+    margin-bottom:20px;
+}
+
+.pagination-btn{
+
+    min-width:120px;
+    height:46px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.2s ease;
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,0.25);
+}
+
+.pagination-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(37,99,235,0.35);
+}
+
+.pagination-btn:disabled{
+
+    opacity:0.35;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+.page-indicator{
+
+    padding:12px 18px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    color:#cbd5e1;
+
+    font-size:14px;
+    font-weight:600;
+}
+
+/* =========================
+   SKELETON LOADING
+========================= */
+
+.skeleton-card{
+
+    height:260px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.06),
+            rgba(255,255,255,0.03)
+        );
+
+    background-size:200% 100%;
+
+    animation:skeleton 1.2s infinite linear;
+}
+
+@keyframes skeleton{
+
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+
+/* =========================
+   DRAG DROP
+========================= */
+
+.cdk-drag-preview{
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15,23,42,0.95),
+            rgba(2,6,23,0.98)
+        )!important;
+
+    border:1px solid rgba(59,130,246,0.3)!important;
+
+    box-shadow:
+        0 18px 34px rgba(0,0,0,0.6)!important;
+
+    padding:6px;
+}
+
+.cdk-drag-placeholder{
+
+    opacity:0.15;
+
+    border-radius:14px;
+
+    border:
+        1px dashed rgba(255,255,255,0.25);
+}
+
+.cdk-drag-animating{
+    transition:
+        transform 250ms cubic-bezier(0,0,0.2,1);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:992px){
+
+    .poll-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:768px){
+
+    .header-section h1{
+        font-size:30px;
+    }
+
+    .poll-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:14px;
+    }
+
+    .search-grid{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .filter-wrapper{
+        width:100%;
+    }
+
+    .button-group-horizontal{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .button-group-horizontal button{
+        width:100%;
+    }
+
+    .option-row{
+        gap:10px;
+    }
+
+    .option-number{
+        width:36px;
+        height:36px;
+    }
+
+    .delete-btn{
+        width:38px;
+        height:38px;
+    }
+}
